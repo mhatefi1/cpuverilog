@@ -1,12 +1,12 @@
 module multi (  
-      input clk,   
+	input clk,   
 	input [63:0] a,
-      input [63:0] b,  
+	input [63:0] b,  
 	input [1:0] s,
-      output [63:0] out
+	output [63:0] out
  );  
-       if (write_en)  
-               assign out = a; 
+	if (s==0b'0)  
+		assign out = a; 
 	else  
 		assign out = b; 
  endmodule 
