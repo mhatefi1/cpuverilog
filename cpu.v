@@ -1,6 +1,6 @@
 module cpu();
 
-reg pc_data;
+wire pc_data;
 wire clk;
 reg pc_reset;
 wire pc;
@@ -29,80 +29,120 @@ wire imgen_out;
 
 wire mux1_out;
 wire mux2_out;
+wire mux3_out;
 
-reg alu_input2;
 wire alu_zero;
 wire alu_out;
 
 wire memory_read;
 
+wire adder1_zero;
+wire adder2_xero;
+wire adder1_out;
+wire adder2_out;
+
+reg [3:0] add_command = 4'b0010;
+
+initial begin
+	pc_reset = 1;
+	#10;
+	pc_reset = 0;
+  end
+
+initial begin
+	ins_write_enable = 1;
+	ins_write_data = 0; //todo
+end
+
 clock my_clock(clk);
-pc my_pc(.pc_data(pc_data), .clk(clk), .pc_reset(pc_reset), .pc(pc));
+pc my_pc(.data(pc_data), .clk(clk), .reset(pc_reset), .out(pc));
 instruction_memory im(.clk(clk),
-	.pc(pc),
-	.ins_write_data(ins_write_data),
-	.ins_write_enable(ins_write_enable),
-	.ins_read_enable(ins_read_enable),
-	.instruction(instruction)
+	.address(pc),
+	.write_data(ins_write_data),
+	.write_en(ins_write_enable),
+	.read_en(ins_read_enable),
+	.read_data(instruction)
 );
 
 control ctrl(.clk(clk),
 	.instruction(instruction),
-	.ctrl_branch(ctrl_branch),
-	.ctrl_mem_read(ctrl_v),
-	.ctrl_mem_to_reg(ctrl_mem_to_reg),
-	.ctrl_alu_op(ctrl_alu_op),
-	.ctrl_mem_write(ctrl_mem_write),
-	.ctrl_alu_src(ctrl_alu_src),
-	.ctrl_reg_write(ctrl_reg_write)
+	.branch(ctrl_branch),
+	.mem_read(ctrl_v),
+	.mem_to_reg(ctrl_mem_to_reg),
+	.alu_op(ctrl_alu_op),
+	.mem_write(ctrl_mem_write),
+	.alu_src(ctrl_alu_src),
+	.reg_write(ctrl_reg_write)
 );
 
 reg_bank rb(.clk(clk),
 	.instruction(instruction),
-	.memory_read(memory_read),
-	.ctrl_reg_write(ctrl_reg_write),
-	.rb_read_enable(rb_read_enable),
-	.rb_read1(rb_read1),
-	.rb_read2(rb_read2)
+	.write_data(memory_read),
+	.write_en(ctrl_reg_write),
+	.read_en(rb_read_enable),
+	.read_data1(rb_read1),
+	.read_data2(rb_read2)
 );
 
-alu-control alu-control(.clk(clk),
+alu__control alu__control(.clk(clk),
 	.instruction(instruction),
-	.ctrl_alu_op(ctrl_alu_op),
-	.alu_control(alu_control)
+	.op(ctrl_alu_op),
+	.out(alu_control)
 );
 
 imgen imgen(.clk(clk),
-	.instruction(instruction),
-	.imgen_out(imgen_out)
+	.in(instruction),
+	.out(imgen_out)
 );
 
-mlti mux1(.ctrl_alu_src(ctrl_alu_src),
-	.rb_read2(rb_read2),
-	.imgen_out(imgen_out),
-	.mux1_out(mux1_out)
+mlti mux1(.select(ctrl_alu_src),
+	.a(rb_read2),
+	.b(imgen_out),
+	.out(mux1_out)
 );
 
 alu alu(.clk(clk),
-	.alu_control(alu_control),
-	.rb_read1(rb_read1),
-	.mux1_out(mux1_out),
-	.alu_zero(alu_zero),
-	.alu_out(alu_out)
+	.select(alu_control),
+	.input1(rb_read1),
+	.input2(mux1_out),
+	.zero(alu_zero),
+	.result(alu_out)
 );
 
 memory memory(.clk(clk),
-	.alu_out(alu_out),
-	.rb_read2(v),
-	.ctrl_mem_write(ctrl_mem_write),
-	.ctrl_mem_read(ctrl_mem_read),
-	.memory_read(memory_read)
+	.address(alu_out),
+	.write_data(v),
+	.write_en(ctrl_mem_write),
+	.read_en(ctrl_mem_read),
+	.read_data(memory_read)
 );
 
-mlti mux2(.ctrl_mem_to_reg(ctrl_mem_to_reg),
-	.memory_read(memory_read),
-	.alu_out(alu_out),
-	.mux2_out(mux2_out)
+mlti mux2(.select(ctrl_mem_to_reg),
+	.a(memory_read),
+	.b(alu_out),
+	.out(mux2_out)
+);
+
+alu adder1(.clk(clk),
+	.select(4'b0010),
+	.input1(pc),
+	.input2(4),
+	.zero(adder1_zero),
+	.result(adder1_out)
+);
+
+alu adder2(.clk(clk),
+	.select(4'b0010),
+	.input1(pc),
+	.input2({imgen_out<<1, 1'b0}),
+	.zero(adder2_zero),
+	.result(adder2_out)
+);
+
+mlti mux3(.select(ctrl_branch&alu_zero),
+	.a(adder1_out),
+	.b(adder2_out),
+	.out(pc_data)
 );
 
 endmodule;

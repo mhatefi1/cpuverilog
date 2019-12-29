@@ -1,13 +1,13 @@
-module cotrol (  
+module control (  
 	input clk,   
 	input [31:0] instruction,
-	output branch,
-	output mem_read,
-	output mem_to_reg,
-	output [1:0] alu_op,
-	output mem_write,
-	output alu_src,
-	output reg_write
+	output  reg branch,
+	output reg mem_read,
+	output reg mem_to_reg,
+	output reg [1:0] alu_op,
+	output reg mem_write,
+	output reg alu_src,
+	output reg reg_write
  );  
  
 	assign ins = instruction[6:0];

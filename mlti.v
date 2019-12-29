@@ -1,6 +1,5 @@
-module multiplexer(input select, a, b, output [63:0] out);
+module mlti(input select, a, b, output reg [63:0] out);
 	input select, a, b;
-	output reg out;
 
 	always@(select or a or b) begin
 	if(select == 0)

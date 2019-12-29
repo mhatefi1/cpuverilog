@@ -1,11 +1,11 @@
-module alu-control (  
+module alu__control (  
 	input clk,   
 	input [31:0] instruction,
 	input [1:0] op,
-	output [3:0] out
+	output reg [3:0] out
  );  
 	
-	wire ins[9:0]= {instruction[31 : 25], instruction[14 : 12]};
+	wire[9:0] ins = {instruction[31 : 25], instruction[14 : 12]};
 	wire in =  {op, ins};
 
 	always @(in, posedge clk)

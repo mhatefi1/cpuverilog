@@ -1,4 +1,4 @@
-module immediate_generator(clk, in, out);
+module imgen(clk, in, out);
 
 input[31:0] in;
 output reg [63:0] out;
