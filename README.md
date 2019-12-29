@@ -17,11 +17,11 @@ This project is licensed under the GPLv2 License - see the [LICENSE.md](LICENSE.
 
 ## Tables:
 ### Control:
-![](http://github.com/mhatefi1/cpuverilog/blob/master/control)
+![](https://github.com/mhatefi1/cpuverilog/blob/master/control)
 ### ALU Control:
-![](http://github.com/mhatefi1/cpuverilog/blob/master/alu-control)
+![](https://github.com/mhatefi1/cpuverilog/blob/master/alu-control)
 ### ALU Operation:
-![](http://github.com/mhatefi1/cpuverilog/blob/master/alu-operation)
+![](https://github.com/mhatefi1/cpuverilog/blob/master/alu-operation)
 
 ## Modules:
 
