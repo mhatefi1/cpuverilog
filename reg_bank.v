@@ -1,8 +1,6 @@
 module reg_bank (  
 	input clk,   
-	input [63:0] read_address1,
-	input [63:0] read_address2,
-	input [63:0] write_address,
+	input [31:0] instruction
 	input [63:0] write_data,  
 	input write_en,  
 	input read_en,  
@@ -11,9 +9,9 @@ module reg_bank (
  );  
     integer i;  
     reg [63:0] ram [255:0];  
-    wire [7 : 0] ram_address1 = read_address1[8 : 1];  
-	wire [7 : 0] ram_address2 = read_address2[8 : 1];
-	wire [7 : 0] ram_write_address = write_address[8 :1];
+    wire [7 : 0] ram_address1 = instruction[19 : 15];  
+	wire [7 : 0] ram_address2 = read_address2[24 : 20];
+	wire [7 : 0] ram_write_address = write_address[11 :7];
   
 	initial begin  
 	   for(i=0;i<256;i=i+1)  

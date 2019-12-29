@@ -5,8 +5,14 @@ module multi (
 	input [1:0] s,
 	output [63:0] out
  );  
-	if (s==0b'0)  
-		assign out = a; 
-	else  
-		assign out = b; 
+ 
+	always@(posedge clk)
+	begin
+		if (s==0b'0)  
+			assign out = a; 
+		else  
+			assign out = b; 
+	end
+	
+	
  endmodule 
