@@ -2,14 +2,17 @@
 
 This project offers a simple implementation of a single-cycle CPU in verlog.
 
+
 ## Authors
 
 * **Alireza Majari** - [ALI-P48](https://github.com/ALI-P48)
 * **Mohammad Hossein Hatefi** - [mhatefi1](https://github.com/mhatefi1)
 
+
 ## License
 
 This project is licensed under the GPLv2 License - see the [LICENSE.md](LICENSE.md) file for details
+
 
 ## Datapath diagram:
 
@@ -22,6 +25,7 @@ This project is licensed under the GPLv2 License - see the [LICENSE.md](LICENSE.
 ![](http://github.com/mhatefi1/cpuverilog/master/pics/alu-control)
 ### ALU Operation:
 ![](http://github.com/mhatefi1/cpuverilog/master/pics/alu-operation)
+
 
 ## Modules:
 
