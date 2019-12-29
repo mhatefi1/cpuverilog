@@ -1,18 +1,12 @@
-module multi (  
-	input clk,   
-	input [63:0] a,
-	input [63:0] b,  
-	input [1:0] s,
-	output [63:0] out
- );  
- 
-	always@(posedge clk)
-	begin
-		if (s==0b'0)  
-			assign out = a; 
-		else  
-			assign out = b; 
+module multiplexer(input select, a, b, output [63:0] out);
+	input select, a, b;
+	output reg out;
+
+	always@(select or a or b) begin
+	if(select == 0)
+		out <= a;
+	else 
+		out <= b;
 	end
-	
-	
- endmodule 
+
+endmodule;

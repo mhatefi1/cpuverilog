@@ -3,8 +3,8 @@ module alu (
 	input [3:0] select,
 	input [63:0] input1,
 	input [63:0] input2,
-	input [1:0] zero,
-	resultput [63:0] result
+	output [1:0] zero,
+	output [63:0] result
  );  
     
 	always@(posedge clk, input1, input2, select)
