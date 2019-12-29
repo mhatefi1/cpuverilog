@@ -13,15 +13,15 @@ This project is licensed under the GPLv2 License - see the [LICENSE.md](LICENSE.
 
 ## Datapath diagram:
 
-![](http://github.com/mhatefi1/cpuverilog/master/images/blur.bmp)
+![](https://github.com/mhatefi1/cpuverilog/blob/master/datapath.jpg)
 
 ## Tables:
 ### Control:
-![](https://github.com/mhatefi1/cpuverilog/blob/master/control)
+![](https://github.com/mhatefi1/cpuverilog/blob/master/control.jpg)
 ### ALU Control:
-![](https://github.com/mhatefi1/cpuverilog/blob/master/alu-control)
+![](https://github.com/mhatefi1/cpuverilog/blob/master/alu-control.jpg)
 ### ALU Operation:
-![](https://github.com/mhatefi1/cpuverilog/blob/master/alu-operation)
+![](https://github.com/mhatefi1/cpuverilog/blob/master/alu-operation.jpg)
 
 ## Modules:
 
